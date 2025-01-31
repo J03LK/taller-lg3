@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cursos</title>
+    <link rel="stylesheet" href="/taller1/src/main/resources/static/css/portal.css">
+    <link rel="stylesheet" href="/taller1/src/main/resources/static/css/certificados.css">
+    <link rel="stylesheet" href="/taller1/src/main/resources/static/css/botones.css">
+    <link rel="stylesheet" href="/taller1/src/main/resources/static/css/estilos.css">
+    <link rel="stylesheet" href="/taller1/src/main/resources/static/css/navbar.css">
+    <link rel="stylesheet" href="/taller1/src/main/resources/static/css/portal.css">
+    <link rel="stylesheet" href="/taller1/src/main/resources/static/css/certificados.css">
+    <link rel="stylesheet" href="/taller1/src/main/resources/static/css/botones.css">
+    <link rel="stylesheet" href="/taller1/src/main/resources/static/css/evaluacion.css">
+    
+</head>
+<body>
+<header>
+    <h1>Cursos Disponibles</h1>
+</header>
+<nav class="navbar">
+    <div class="nav-brand">
+        <img src="/taller1/src/main/resources/static/imagenes/logo.png" alt="Logo" class="logo">
+        <span class="brand-text">TechAcademy</span>
+    </div>
+    <ul class="nav-menu">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#cursos">Cursos</a></li>
+        <li><a href="#ubicacion">Ubicación</a></li>
+        <li><a th:href="@{/logout}" class="btn-registro">Cerrar sesion</a></li>
+    </ul>
+</nav>
+<!-- Portal del Profesor -->
+<section id="portal-instructor" class="portal-section">
+    <h1>Portal del Profesor</h1> <!-- Cambio de título -->
+    <div class="portal-grid">
+        <div class="portal-card">
+            <div class="portal-header">
+                <img src="/taller1/src/main/resources/static/imagenes/iconos/students.png" alt="Estudiantes" class="portal-icon">
+                <h3>Gestión de Estudiantes</h3>
+            </div>
+            <div class="portal-content">
+                <div class="search-bar">
+                    <input type="text" placeholder="Buscar estudiante..." class="search-input">
+                    <button class="btn btn-search">Buscar</button>
+                </div>
+                <table class="students-table">
+                    <thead>
+                        <tr>
+                            <th>Estudiante</th>
+                            <th>Curso</th>
+                            <th>Progreso</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Ana García</td>
+                            <td>HTML y CSS</td>
+                            <td>75%</td>
+                            <td>
+                                <button class="btn btn-view">Ver detalles</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="portal-card">
+            <div class="portal-header">
+                <img src="/taller1/src/main/resources/static/imagenes/iconos/content.png" alt="Contenido" class="portal-icon">
+                <h3>Gestión de Contenido</h3>
+            </div>
+            <div class="portal-content">
+                <div class="content-tools">
+                    <button class="btn btn-primary">Nuevo Módulo</button>
+                    <button class="btn btn-primary">Nuevo Exámen</button>
+                    <button class="btn btn-primary">Nuevo Recurso</button>
+                </div>
+                <div class="module-list">
+                    <div class="module-item">
+                        <h4 class="module-title">Módulo 1: Introducción</h4>
+                        <div class="module-actions">
+                            <button class="btn btn-edit">Editar</button>
+                            <button class="btn btn-delete">Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Sistema de Evaluación -->
+<section id="evaluacion" class="evaluacion-section">
+    <h1>Sistema de Evaluación</h1> <!-- Cambio de título aquí también -->
+    <div class="evaluacion-grid">
+        <div class="exam-creation-card">
+            <h3>Crear Nuevo Examen</h3>
+            <form class="exam-form">
+                <div class="form-group">
+                    <label for="exam-title">Título del Examen</label>
+                    <input type="text" id="exam-title" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="exam-course">Curso</label>
+                    <select id="exam-course" class="form-select" required>
+                        <option value="">Seleccionar curso...</option>
+                        <option value="html">HTML y CSS</option>
+                        <option value="js">JavaScript</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exam-duration">Duración (minutos)</label>
+                    <input type="number" id="exam-duration" class="form-input" required>
+                </div>
+                <div class="question-section">
+                    <h4>Preguntas</h4>
+                    <button type="button" class="btn btn-add-question">Agregar Pregunta</button>
+                    <div class="question-list">
+                        <!-- Las preguntas se agregarán dinámicamente -->
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-save-exam">Guardar Examen</button>
+            </form>
+        </div>
+    </div>
+</section>
+</body>
+</html>

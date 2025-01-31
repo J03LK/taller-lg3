@@ -1,0 +1,106 @@
+/* Estilos generales */
+.portal-section {
+    padding: 4rem 2rem;
+    background: #f8f9fa;
+}
+
+.portal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.portal-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.portal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.portal-header {
+    background: #0056b3;
+    color: white;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.portal-icon {
+    width: 36px;
+    height: 36px;
+}
+
+.portal-content {
+    padding: 1.5rem;
+}
+
+.portal-section h1 {
+    font-size: 2.5rem;
+    text-align: center; /* Títulos centrados */
+    margin-bottom: 2rem;
+    color: #343a40;
+}
+
+.portal-section h1 small {
+    font-size: 1rem;
+    color: #6c757d;
+    display: block;
+    margin-top: 0.5rem;
+}
+
+/* Progreso de Cursos */
+.curso-progress-list {
+    list-style: none;
+    padding: 0;
+}
+
+.curso-progress-item {
+    margin-bottom: 1.2rem;
+}
+
+.progress-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 10px;
+    background: #e9ecef;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background: #28a745;
+    transition: width 0.4s ease;
+}
+
+/* Exámenes */
+.exam-list {
+    list-style: none;
+    padding: 0;
+}
+
+.exam-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.exam-item:last-child {
+    border-bottom: none;
+}

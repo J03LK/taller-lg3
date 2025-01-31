@@ -1,0 +1,46 @@
+/* Botones */
+.btn-portal,
+.btn-start-exam,
+.btn-download,
+.btn-search,
+.btn-view,
+.btn-new-module,
+.btn-new-quiz,
+.btn-new-resource,
+.btn-edit,
+.btn-delete,
+.btn-add-question,
+.btn-save-exam {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-portal {
+    background: #007bff;
+    color: white;
+}
+
+.btn-portal:hover {
+    background: #0056b3;
+}
+
+.btn-start-exam {
+    background: #28a745;
+    color: white;
+}
+
+.btn-start-exam:hover {
+    background: #218838;
+}
+
+.btn-download {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-download:hover {
+    background: #545b62;
+}

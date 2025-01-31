@@ -1,0 +1,38 @@
+/* Sistema de Evaluación */
+.evaluacion-section {
+    padding: 4rem 2rem;
+    text-align: center; /* Centra el título en toda la sección */
+}
+
+.evaluacion-section h1 {
+    font-size: 2.5rem;
+    color: #343a40;
+    margin-bottom: 2rem;
+}
+
+.exam-creation-card {
+    max-width: 850px;
+    margin: 0 auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.form-group {
+    margin-bottom: 1.8rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+}

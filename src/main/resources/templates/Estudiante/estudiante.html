@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" th:href="@{/css/evaluaciones.css}">
+    <link rel="stylesheet" th:href="@{/css/vertificados.css}">
+    <link rel="stylesheet" th:href="@{/css/botones.css}">
+    <link rel="stylesheet" th:href="@{/css/certificados.css}">
+    <link rel="stylesheet" th:href="@{/css/portal.css}">
+    <link rel="stylesheet" th:href="@{/css/estudiante/estudiante.css}">
+    <title>Estudiante</title>
+</head>
+<nav class="navbar">
+    <div class="nav-brand">
+        <img th:src="@{imagenes/logo.png}" alt="Logo" class="logo">
+        <span class="brand-text">TechAcademy</span>
+    </div>
+    <ul class="nav-menu">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#cursos">Cursos</a></li>
+        <li><a href="#ubicacion">Ubicación</a></li>
+        <li><a th:href="@{/logout}" id="logout-link" class="btn-registro">Cerrar sesión</a></li>
+    </ul>l>
+</nav>
+<body>
+    <!-- Portal del Estudiante -->
+<section id="portal-estudiante" class="portal-section">
+
+    <h1>Bienvenido <span th:text="${estudiante.nombre}"></span></h1>
+    <div class="perfil-info">
+        <p><strong>Correo electrónico:</strong> <span th:text="${estudiante.email}"></span></p>
+        <p><strong>Teléfono:</strong> <span th:text="${estudiante.telefono}"></span></p>
+        <p><strong>Fecha de nacimiento:</strong> <span th:text="${#temporals.format(estudiante.fechaNacimiento, 'dd/MM/yyyy')}"></span></p>
+        <p><strong>Dirección:</strong> <span th:text="${estudiante.direccion}"></span></p>
+        <p><strong>Curso seleccionado:</strong> <span th:text="${estudiante.curso}"></span></p>
+        <p><strong>Género:</strong> <span th:text="${#strings.capitalize(estudiante.genero)}"></span></p>
+    </div>
+    <div th:if="${mensaje}" class="success" th:text="${mensaje}"></div>
+
+    <div class="portal-grid">
+        <div class="portal-card">
+            <div class="portal-header">
+                <img src="/taller1/src/main/resources/static/imagenes/iconos/courses.png" alt="Mis Cursos" class="portal-icon">
+                <h3>Mis Cursos</h3>
+            </div>
+            <div class="portal-content">
+                <ul class="curso-progress-list">
+                    <li class="curso-progress-item">
+                        <div class="progress-info">
+                            <span>HTML y CSS</span>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 75%"></div>
+                            </div>
+                            <span>75%</span>
+                        </div>
+                    </li>
+                    <li class="curso-progress-item">
+                        <div class="progress-info">
+                            <span>JavaScript Básico</span>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 40%"></div>
+                            </div>
+                            <span>40%</span>
+                        </div>
+                    </li>
+                </ul>
+                <button class="btn-portal">Ver todos mis cursos</button>
+            </div>
+        </div>
+
+        <div class="portal-card">
+            <div class="portal-header">
+                <img src="/taller1/src/main/resources/static/imagenes/iconos/exam.png" alt="Exámenes" class="portal-icon">
+                <h3>Exámenes Pendientes</h3>
+            </div>
+            <div class="portal-content">
+                <ul class="exam-list">
+                    <li class="exam-item">
+                        <span class="exam-title">Evaluación Final HTML</span>
+                        <span class="exam-date">Fecha límite: 15/02/2025</span>
+                        <button class="btn-start-exam">Comenzar</button>
+                    </li>
+                    <li class="exam-item">
+                        <span class="exam-title">Quiz JavaScript - Módulo 2</span>
+                        <span class="exam-date">Fecha límite: 20/02/2025</span>
+                        <button class="btn-start-exam">Comenzar</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="portal-card">
+            <div class="portal-header">
+                <img src="/taller1/src/main/resources/static/imagenes/iconos/certificate.png" alt="Certificados" class="portal-icon">
+                <h3>Mis Certificados</h3>
+            </div>
+            <div class="portal-content">
+                <div class="certificate-grid">
+                    <div class="certificate-item">
+                        <img src="/taller1/src/main/resources/static/imagenes/certificados/cert-python.png" alt="Certificado Python" class="cert-thumbnail">
+                        <span>Python Básico</span>
+                        <button class="btn-download">Descargar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="footer-wave"></div>
+    <div class="footer-content">
+        <div class="footer-section">
+            <img th:src="@{imagenes/logo.png}" alt="Logo Footer" class="footer-logo">
+            <p>Email: info@techacademy.com</p>
+            <p>Teléfono: (123) 456-7890</p>
+        </div>
+        <div class="footer-section">
+            <h3>Síguenos</h3>
+            <div class="social-links">
+                <img th:src="@{imagenes/redesSociales/facebook.png}" alt="Facebook" class="social-icon">
+                <img th:src="@{imagenes/redesSociales/x.jpeg}" alt="X" class="social-icon">
+                <img th:src="@{imagenes/redesSociales/linkedin.png}" alt="LinkedIn" class="social-icon">
+            </div>
+        </div>
+        <div class="footer-section">
+            <h3>Enlaces Rápidos</h3>
+            <a href="/">Inicio</a>
+            <a href="/#cursos">Cursos</a>
+            <a href="/#ubicacion">Ubicación</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 TechAcademy. Todos los derechos reservados.</p>
+    </div>
+</footer>
+</body>
+</html>

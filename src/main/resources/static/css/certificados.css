@@ -1,0 +1,17 @@
+/* Certificados */
+.certificate-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1.2rem;
+}
+
+.certificate-item {
+    text-align: center;
+}
+
+.cert-thumbnail {
+    width: 100%;
+    max-width: 160px;
+    border-radius: 6px;
+    margin-bottom: 0.7rem;
+}

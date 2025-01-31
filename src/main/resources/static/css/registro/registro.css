@@ -1,0 +1,99 @@
+/* General */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #1a1a1a;
+    background-image: radial-gradient(circle, rgba(0, 255, 255, 0.2) 1px, transparent 1px),
+                      radial-gradient(circle, rgba(0, 255, 255, 0.2) 1px, transparent 1px);
+    background-size: 50px 50px;
+    padding-top: 100px; /* Para no tapar el contenido debajo del navbar */
+}
+
+header .Titulo {
+    text-align: center;
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+}
+
+/* Formulario */
+form {
+    background: white;
+    padding: 2rem;
+    max-width: 500px;
+    margin: 0 auto;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+form div {
+    margin-bottom: 1.5rem;
+}
+
+form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+form input,
+form select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+form input:focus,
+form select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+form button {
+    background: linear-gradient(90deg, #00ffff, #0077ff);
+        color: white;
+        padding: 0.9rem 1.8rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        width: 100%;
+        transition: all 0.3s ease;
+}
+
+form button:hover {
+    background-color: darken(var(--primary-color), 10%);
+}
+
+/* Inputs radio */
+form .flex {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+form .form-radio {
+    margin-right: 0.5rem;
+}
+
+/* Validaciones */
+span {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 0.3rem;
+    display: inline-block;
+}
+.error {
+    color: red;
+    font-size: 0.9em;
+}
+
+.success {
+    color: green;
+    font-size: 1em;
+    margin-top: 10px;
+}

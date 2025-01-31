@@ -1,0 +1,120 @@
+/* Estilos generales */
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background: #1a1a1a;
+    background-image: radial-gradient(circle, rgba(0, 255, 255, 0.2) 1px, transparent 1px),
+                      radial-gradient(circle, rgba(0, 255, 255, 0.2) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: 0 0, 25px 25px;
+    color: white;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+/* Estilo principal para el área de contenido */
+main {
+    flex: 1; /* Permite que el contenido ocupe el espacio restante entre el navbar y el footer */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 1rem; /* Espaciado interno */
+    margin-top: 4rem; /* Espaciado del navbar */
+    margin-bottom: 4rem; /* Espaciado del footer */
+}
+
+
+/* Contenedor del formulario */
+.login-container {
+    background: rgba(255, 255, 255, 0.8); /* Fondo blanco translúcido */
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), 0 6px 6px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.login-container:hover {
+    transform: scale(1.03);
+}
+
+.login-container h2 {
+    margin-bottom: 2rem;
+    color: #0077ff;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+/* Grupos de formulario */
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.9rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #fff;
+    color: #333;
+    outline: none;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.form-group input:focus {
+    border-color: #0077ff;
+    box-shadow: 0 0 8px rgba(0, 119, 255, 0.6);
+}
+
+/* Botón de inicio de sesión */
+.btn-login {
+    background: linear-gradient(90deg, #00ffff, #0077ff);
+    color: white;
+    padding: 0.9rem 1.8rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+    background: linear-gradient(90deg, #0044cc, #002288);
+    box-shadow: 0 4px 15px rgba(0, 119, 255, 0.5);
+}
+/* Enlace "¿Olvidaste tu contraseña?" */
+.forgot-password {
+    display: block;
+    margin-top: 1rem;
+    color: #0077ff;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+    color: #0044cc;
+}
+
+/* Footer */
+footer {
+    width: 100%;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    position: relative; /* Cambiar posición relativa */
+}

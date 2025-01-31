@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Plataforma de Cursos</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" th:href="@{/css/modal.css}">
+    <link rel="stylesheet" th:href="@{/css/modalCierre.css}">
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-brand">
+        <img th:src="@{imagenes/logo.png}" alt="Logo" class="logo">
+        <span class="brand-text">TechAcademy</span>
+    </div>
+    <ul class="nav-menu">
+        <li><a href="/">Inicio</a></li>
+        <li><a href="#cursos">Cursos</a></li>
+        <li><a href="#ubicacion">Ubicación</a></li>
+        <li><a th:href="@{/registro}" class="btn-registro">Registrarse</a></li>
+        <li><a th:href="@{/iniciarSesion}" class="btn-registro">Iniciar Sesion</a></li>
+    </ul>
+</nav>
+
+<div class="hero-section">
+    <img th:src="@{imagenes/head.jpg}" alt="Programación" class="hero-image">
+    <div class="hero-text">
+        <h1>Aprende programación con expertos</h1>
+        <p>Descubre tu potencial en el mundo del desarrollo</p>
+    </div>
+</div>
+
+<section id="cursos" class="cursos-section">
+    <h2>Nuestros Cursos</h2>
+    <div class="cursos-grid">
+        <!-- Curso: HTML y CSS -->
+        <div class="curso-card">
+            <img th:src="@{imagenes/cursos/htmlycss.png}" alt="HTML y CSS" class="curso-imagen">
+            <h3>HTML y CSS</h3>
+            <p>Aprende a crear sitios web modernos y responsivos con HTML5 y CSS3.</p>
+            <button class="btn-ver-mas" data-modal="modal-html-css">Ver más</button>
+        </div>
+        <!-- Modal: HTML y CSS -->
+        <div id="modal-html-css" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <!-- Imagen en círculo -->
+                <img th:src="@{imagenes/cursos/htmlycss.png}"alt="HTML y CSS" class="modal-imagen">
+                <h3>HTML y CSS</h3>
+                <div class="modal-contenido">
+                    <p>En este curso aprenderás:</p>
+                    <ul>
+                        <li>HTML5 y etiquetas semánticas</li>
+                        <li>CSS3 y diseño responsivo</li>
+                        <li>Buenas prácticas para crear sitios modernos</li>
+                    </ul>
+                    <p><strong>Certificación:</strong> Al finalizar, obtendrás un certificado oficial en desarrollo web básico.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Curso: JavaScript -->
+        <div class="curso-card">
+            <img th:src="@{imagenes/cursos/js.png}" alt="JavaScript" class="curso-imagen">
+            <h3>JavaScript</h3>
+            <p>Domina el lenguaje de programación más popular para el desarrollo web.</p>
+            <button class="btn-ver-mas" data-modal="modal-javascript">Ver más</button>
+        </div>
+        <!-- Modal: JavaScript -->
+        <div id="modal-javascript" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <!-- Imagen en círculo -->
+                <img th:src="@{imagenes/cursos/js.png}" alt="JavaScript" class="modal-imagen">
+                <h3>JavaScript</h3>
+                <div class="modal-contenido">
+                    <p>En este curso aprenderás:</p>
+                    <ul>
+                        <li>Fundamentos de JavaScript</li>
+                        <li>DOM y eventos</li>
+                        <li>ES6+ y características modernas</li>
+                    </ul>
+                    <p><strong>Certificación:</strong> Al finalizar, obtendrás un certificado oficial en JavaScript.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Curso: Spring Boot -->
+        <div class="curso-card">
+            <img th:src="@{imagenes/cursos/spingboot.jpg}" alt="Spring Boot" class="curso-imagen">
+            <h3>Spring Boot</h3>
+            <p>Desarrolla aplicaciones Java empresariales con Spring Boot.</p>
+            <button class="btn-ver-mas" data-modal="modal-spring">Ver más</button>
+        </div>
+        <!-- Modal: Spring Boot -->
+        <div id="modal-spring" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <!-- Imagen en círculo -->
+                <img th:src="@{imagenes/cursos/spingboot.jpg}" alt="Spring Boot" class="modal-imagen">
+                <h3>Spring Boot</h3>
+                <div class="modal-contenido">
+                    <p>En este curso aprenderás:</p>
+                    <ul>
+                        <li>Configuración y desarrollo con Spring Boot</li>
+                        <li>APIs RESTful</li>
+                        <li>Seguridad y bases de datos</li>
+                    </ul>
+                    <p><strong>Certificación:</strong> Al finalizar, obtendrás un certificado oficial en desarrollo con Spring Boot.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Curso: Python -->
+        <div class="curso-card">
+            <img th:src="@{imagenes/cursos/python.png}" alt="Python" class="curso-imagen">
+            <h3>Python</h3>
+            <p>Aprende el lenguaje más versátil para desarrollo y ciencia de datos.</p>
+            <button class="btn-ver-mas" data-modal="modal-python">Ver más</button>
+        </div>
+        <!-- Modal: Python -->
+        <div id="modal-python" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <!-- Imagen en círculo -->
+                <img th:src="@{imagenes/cursos/python.png}" alt="Python" class="modal-imagen">
+                <h3>Python</h3>
+                <div class="modal-contenido">
+                    <p>En este curso aprenderás:</p>
+                    <ul>
+                        <li>Fundamentos de Python</li>
+                        <li>Programación orientada a objetos</li>
+                        <li>Frameworks populares</li>
+                    </ul>
+                    <p><strong>Certificación:</strong> Al finalizar, obtendrás un certificado oficial en Python.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Curso: React -->
+        <div class="curso-card">
+            <img th:src="@{imagenes/cursos/react.png}" alt="React" class="curso-imagen">
+            <h3>React</h3>
+            <p>Crea aplicaciones web modernas con la biblioteca más popular de JavaScript.</p>
+            <button class="btn-ver-mas" data-modal="modal-react">Ver más</button>
+        </div>
+        <!-- Modal: React -->
+        <div id="modal-react" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <!-- Imagen en círculo -->
+                <img th:src="@{imagenes/cursos/react.png}" alt="React" class="modal-imagen">
+                <h3>React</h3>
+                <div class="modal-contenido">
+                    <p>En este curso aprenderás:</p>
+                    <ul>
+                        <li>Componentes y JSX</li>
+                        <li>Hooks y estado</li>
+                        <li>Redux y gestión de estado</li>
+                    </ul>
+                    <p><strong>Certificación:</strong> Al finalizar, obtendrás un certificado oficial en React.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Curso: Node.js -->
+        <div class="curso-card">
+            <img th:src="@{imagenes/cursos/nodejs.png}" alt="Node.js" class="curso-imagen">
+            <h3>Node.js</h3>
+            <p>Desarrolla aplicaciones del lado del servidor con JavaScript.</p>
+            <button class="btn-ver-mas" data-modal="modal-nodejs">Ver más</button>
+        </div>
+        <!-- Modal: Node.js -->
+        <div id="modal-nodejs" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <!-- Imagen en círculo -->
+                <img th:src="@{imagenes/cursos/nodejs.png}" alt="Node.js" class="modal-imagen">
+                <h3>Node.js</h3>
+                <div class="modal-contenido">
+                    <p>En este curso aprenderás:</p>
+                    <ul>
+                        <li>Fundamentos de Node.js</li>
+                        <li>Express.js y APIs</li>
+                        <li>Bases de datos y autenticación</li>
+                    </ul>
+                    <p><strong>Certificación:</strong> Al finalizar, obtendrás un certificado oficial en Node.js.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Ubicacion-->
+<section id="ubicacion" class="ubicacion-section">
+    <h2>Nuestra Ubicación</h2>
+    <div id="mapa" class="mapa"></div>
+</section>
+
+<footer class="footer">
+    <div class="footer-wave"></div>
+    <div class="footer-content">
+        <div class="footer-section">
+            <img th:src="@{imagenes/logo.png}" alt="Logo Footer" class="footer-logo">
+            <p>Email: info@techacademy.com</p>
+            <p>Teléfono: (123) 456-7890</p>
+        </div>
+        <div class="footer-section">
+            <h3>Síguenos</h3>
+            <div class="social-links">
+                <img th:src="@{imagenes/redesSociales/facebook.png}" alt="Facebook" class="social-icon">
+                <img th:src="@{imagenes/redesSociales/x.jpeg}" alt="X" class="social-icon">
+                <img th:src="@{imagenes/redesSociales/linkedin.png}" alt="LinkedIn" class="social-icon">
+            </div>
+        </div>
+        <div class="footer-section">
+            <h3>Enlaces Rápidos</h3>
+            <a href="/">Inicio</a>
+            <a href="#cursos">Cursos</a>
+            <a href="#ubicacion">Ubicación</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 TechAcademy. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+<script>
+    var map = L.map('mapa').setView([19.4326, -99.1332], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+    L.marker([19.4326, -99.1332]).addTo(map)
+        .bindPopup('TechAcademy')
+        .openPopup();
+</script>
+<script>
+    // Selecciona el enlace de "Cerrar sesión" por su ID
+    const logoutLink = document.getElementById('logout-link');
+
+    // Verifica si el enlace existe en la página
+    if (logoutLink) {
+        // Agrega un evento de clic al enlace
+        logoutLink.addEventListener('click', function(event) {
+            // Previene la acción por defecto del enlace (redirección inmediata)
+            event.preventDefault();
+
+            // Muestra una ventana de confirmación
+            const confirmLogout = confirm('¿Estás seguro de que deseas cerrar sesión?');
+
+            // Si el usuario confirma, redirige a la URL de cierre de sesión
+            if (confirmLogout) {
+                window.location.href = this.href;
+            }
+        });
+    }
+</script>
+</body>
+<script th:src="@{js/modal.js}"></script>
+<script th:src="@{js/portal.js}"></script>
+<script th:src="@{js/logout.js}"></script>
+</html>

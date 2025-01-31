@@ -1,0 +1,80 @@
+/* Estilo para el botón "Ver más" */
+.btn-ver-mas {
+    background-color: #007bff; /* Azul */
+    color: #fff; /* Texto blanco */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-ver-mas:hover {
+    background-color: #0056b3; /* Azul oscuro al pasar el ratón */
+}
+
+/* Estilo para el modal */
+.modal {
+    display: none; /* Ocultar por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombras para destacar */
+}
+
+.modal .close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #000;
+}
+
+/* Estilo para la imagen del modal en círculo */
+.modal-imagen {
+    width: 120px; /* Tamaño ajustado */
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover; /* Asegura que la imagen se ajuste correctamente */
+    margin: 0 auto 15px; /* Centra la imagen horizontalmente y añade margen inferior */
+    display: block;
+    background-color: #f0f0f0; /* Fondo gris claro */
+    padding: 5px; /* Espacio alrededor de la imagen */
+}
+
+/* Contenido del modal */
+.modal-contenido {
+    text-align: left;
+    padding: 15px; /* Espacio interno */
+}
+
+/* Lista más compacta */
+.modal-contenido ul {
+    padding-left: 0;
+    list-style-position: inside; /* Coloca los puntos dentro del contenedor */
+    margin: 10px 0;
+}
+
+.modal-contenido ul li {
+    margin-bottom: 8px; /* Reduce la separación entre puntos */
+    font-size: 14px; /* Tamaño de texto ajustado */
+    line-height: 1.5; /* Espaciado entre líneas */
+}
