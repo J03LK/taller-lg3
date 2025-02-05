@@ -30,6 +30,28 @@
         <li><a th:href="@{/logout}" class="btn-registro">Cerrar sesion</a></li>
     </ul>
 </nav>
+<table class="students-table">
+    <thead>
+    <tr>
+        <th>Estudiante</th>
+        <th>Curso</th>
+        <th>Progreso</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Iterar sobre la lista de estudiantes -->
+    <tr th:each="estudiante : ${estudiantes}">
+        <td th:text="${estudiante.nombre}">Nombre del estudiante</td>
+        <td th:text="${estudiante.curso.nombre}">Nombre del curso</td>
+        <td th:text="${estudiante.progreso} + '%'">Progreso</td>
+        <td>
+            <button class="btn btn-view">Ver detalles</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
 <!-- Portal del Profesor -->
 <section id="portal-instructor" class="portal-section">
     <h1>Portal del Profesor</h1> <!-- Cambio de título -->

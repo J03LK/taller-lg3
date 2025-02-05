@@ -26,11 +26,11 @@
     </ul>l>
 </nav>
 <body>
-    <!-- Portal del Estudiante -->
+<!-- Portal del Estudiante -->
 <section id="portal-estudiante" class="portal-section">
+    <h1>Bienvenido <span th:text="${estudiante != null ? estudiante.nombre : 'Estudiante'}"></span></h1>
 
-    <h1>Bienvenido <span th:text="${estudiante.nombre}"></span></h1>
-    <div class="perfil-info">
+    <div class="perfil-info" th:if="${estudiante != null}">
         <p><strong>Correo electrónico:</strong> <span th:text="${estudiante.email}"></span></p>
         <p><strong>Teléfono:</strong> <span th:text="${estudiante.telefono}"></span></p>
         <p><strong>Fecha de nacimiento:</strong> <span th:text="${#temporals.format(estudiante.fechaNacimiento, 'dd/MM/yyyy')}"></span></p>
@@ -38,12 +38,13 @@
         <p><strong>Curso seleccionado:</strong> <span th:text="${estudiante.curso}"></span></p>
         <p><strong>Género:</strong> <span th:text="${#strings.capitalize(estudiante.genero)}"></span></p>
     </div>
+
     <div th:if="${mensaje}" class="success" th:text="${mensaje}"></div>
 
     <div class="portal-grid">
         <div class="portal-card">
             <div class="portal-header">
-                <img src="/taller1/src/main/resources/static/imagenes/iconos/courses.png" alt="Mis Cursos" class="portal-icon">
+                <img th:src="@{/imagenes/iconos/courses.png}" alt="Mis Cursos" class="portal-icon">
                 <h3>Mis Cursos</h3>
             </div>
             <div class="portal-content">
@@ -73,7 +74,7 @@
 
         <div class="portal-card">
             <div class="portal-header">
-                <img src="/taller1/src/main/resources/static/imagenes/iconos/exam.png" alt="Exámenes" class="portal-icon">
+                <img th:src="@{/imagenes/iconos/exam.png}" alt="Exámenes" class="portal-icon">
                 <h3>Exámenes Pendientes</h3>
             </div>
             <div class="portal-content">
@@ -94,13 +95,13 @@
 
         <div class="portal-card">
             <div class="portal-header">
-                <img src="/taller1/src/main/resources/static/imagenes/iconos/certificate.png" alt="Certificados" class="portal-icon">
+                <img th:src="@{/imagenes/iconos/certificate.png}" alt="Certificados" class="portal-icon">
                 <h3>Mis Certificados</h3>
             </div>
             <div class="portal-content">
                 <div class="certificate-grid">
                     <div class="certificate-item">
-                        <img src="/taller1/src/main/resources/static/imagenes/certificados/cert-python.png" alt="Certificado Python" class="cert-thumbnail">
+                        <img th:src="@{/imagenes/certificados/cert-python.png}" alt="Certificado Python" class="cert-thumbnail">
                         <span>Python Básico</span>
                         <button class="btn-download">Descargar</button>
                     </div>
@@ -114,23 +115,23 @@
     <div class="footer-wave"></div>
     <div class="footer-content">
         <div class="footer-section">
-            <img th:src="@{imagenes/logo.png}" alt="Logo Footer" class="footer-logo">
+            <img th:src="@{/imagenes/logo.png}" alt="Logo Footer" class="footer-logo">
             <p>Email: info@techacademy.com</p>
             <p>Teléfono: (123) 456-7890</p>
         </div>
         <div class="footer-section">
             <h3>Síguenos</h3>
             <div class="social-links">
-                <img th:src="@{imagenes/redesSociales/facebook.png}" alt="Facebook" class="social-icon">
-                <img th:src="@{imagenes/redesSociales/x.jpeg}" alt="X" class="social-icon">
-                <img th:src="@{imagenes/redesSociales/linkedin.png}" alt="LinkedIn" class="social-icon">
+                <img th:src="@{/imagenes/redesSociales/facebook.png}" alt="Facebook" class="social-icon">
+                <img th:src="@{/imagenes/redesSociales/x.jpeg}" alt="X" class="social-icon">
+                <img th:src="@{/imagenes/redesSociales/linkedin.png}" alt="LinkedIn" class="social-icon">
             </div>
         </div>
         <div class="footer-section">
             <h3>Enlaces Rápidos</h3>
-            <a href="/">Inicio</a>
-            <a href="/#cursos">Cursos</a>
-            <a href="/#ubicacion">Ubicación</a>
+            <a th:href="@{/}">Inicio</a>
+            <a th:href="@{/#cursos}">Cursos</a>
+            <a th:href="@{/#ubicacion}">Ubicación</a>
         </div>
     </div>
     <div class="footer-bottom">

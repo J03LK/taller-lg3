@@ -1,14 +1,17 @@
 package com.itsqmet.taller1.Entidad;
 
-
 import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
 public class Estudiante {
 
+    @Pattern(regexp = "^\\d{10}$", message = "La cédula debe tener exactamente 10 dígitos")
+    @NotBlank(message = "La cédula es obligatoria")
+    private String cedula;
+
     @Pattern(regexp = "^[A-Z][a-zA-Z\\s]*$", message = "El nombre debe comenzar con mayúscula y solo contener letras y espacios")
     @NotBlank(message = "El nombre es obligatorio")
-    private String nombre;;
+    private String nombre;
 
     @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$",
             message = "Debe ser un correo electrónico válido")
@@ -36,6 +39,13 @@ public class Estudiante {
     private String genero;
 
     // Getters y Setters
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
 
     public String getNombre() {
         return nombre;

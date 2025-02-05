@@ -1,79 +1,78 @@
 package com.itsqmet.taller1.Controlador;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.itsqmet.taller1.Entidad.Estudiante;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import org.springframework.validation.BindingResult;
 
 @Controller
 public class EstudianteControlador {
 
+    private List<Estudiante> estudiantes = new ArrayList<>();
+
     @GetMapping("/")
-    public String mostrarInicio() {
+    public String mostrarInicio(Model model) {
+        model.addAttribute("estudiante", new Estudiante());
         return "index";
     }
 
-    @GetMapping("/registro")
-    public String mostrarRegistro(Model model) {
-        // Solo agregar el estudiante si no existe en el modelo
-        if (!model.containsAttribute("estudiante")) {
-            model.addAttribute("estudiante", new Estudiante());
-        }
-        return "Estudiante/registro";
-    }
-
-    @PostMapping("/registro")
-    public String procesarRegistro(@Valid Estudiante estudiante,
-                                   BindingResult result,
-                                   RedirectAttributes redirectAttributes) {
-        // Validar el formulario
+    @PostMapping("/Estudiante/registro")
+    @ResponseBody
+    public ResponseEntity<?> procesarRegistro(@Valid @ModelAttribute("estudiante") Estudiante estudiante,
+                                              BindingResult result) {
         if (result.hasErrors()) {
-            // Agregar el estudiante al modelo para mantener los datos ingresados
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.estudiante", result);
-            redirectAttributes.addFlashAttribute("estudiante", estudiante);
-            return "Estudiante/registro";
+            Map<String, String> errors = new HashMap<>();
+            result.getFieldErrors().forEach(error ->
+                    errors.put(error.getField(), error.getDefaultMessage())
+            );
+            return ResponseEntity.badRequest().body(errors);
         }
 
         try {
-            // Aquí podrías agregar lógica para guardar el estudiante en una base de datos
-
-            // Agregar atributos para la página de éxito
-            redirectAttributes.addFlashAttribute("estudiante", estudiante);
-            redirectAttributes.addFlashAttribute("mensaje", "¡Registro completado exitosamente!");
-            return "redirect:/estudiante";
+            estudiantes.add(estudiante);
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Registro exitoso!");
+            response.put("redirectUrl", "/Estudiante/estudiante?id=" + estudiante.getCedula());
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            // Manejar cualquier error que pueda ocurrir
-            redirectAttributes.addFlashAttribute("error", "Error al procesar el registro. Por favor, intente nuevamente.");
-            return "redirect:/registro";
+            Map<String, String> error = new HashMap<>();
+            error.put("message", "Error al procesar el registro");
+            return ResponseEntity.internalServerError().body(error);
         }
     }
 
-    @GetMapping("/estudiante")
-    public String mostrarEstudiante(@ModelAttribute("estudiante") Estudiante estudiante, Model model) {
-        // Verificar si hay un estudiante
-        if (estudiante == null || estudiante.getNombre() == null) {
-            // Si no hay estudiante, redirigir a la página de inicio de sesión
-            return "redirect:/iniciarSesion";
+    @GetMapping("/Estudiante/estudiante")
+    public String mostrarEstudiante(@RequestParam(required = false) String id, Model model) {
+        // Si no hay ID, mostrar el último estudiante registrado
+        Estudiante estudiante;
+        if (id != null && !estudiantes.isEmpty()) {
+            estudiante = estudiantes.stream()
+                    .filter(e -> e.getCedula().equals(id))
+                    .findFirst()
+                    .orElse(estudiantes.get(estudiantes.size() - 1));
+        } else if (!estudiantes.isEmpty()) {
+            estudiante = estudiantes.get(estudiantes.size() - 1);
+        } else {
+            // Si no hay estudiantes, redirigir al inicio
+            return "redirect:/";
         }
 
-        // Asegurar que el estudiante esté disponible en la vista
         model.addAttribute("estudiante", estudiante);
-
-        // Si no hay mensaje de éxito, agregar uno por defecto
-        if (!model.containsAttribute("mensaje")) {
-            model.addAttribute("mensaje", "Perfil de estudiante");
-        }
-
+        model.addAttribute("mensaje", "¡Bienvenido " + estudiante.getNombre() + "!");
         return "Estudiante/estudiante";
     }
-
 
     @GetMapping("/logout")
     public String logout(HttpSession session, RedirectAttributes redirectAttributes) {
@@ -82,4 +81,10 @@ public class EstudianteControlador {
         return "redirect:/";
     }
 }
+
+
+
+
+
+
 
