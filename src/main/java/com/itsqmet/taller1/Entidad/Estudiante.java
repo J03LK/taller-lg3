@@ -1,10 +1,14 @@
 package com.itsqmet.taller1.Entidad;
 
 import jakarta.validation.constraints.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.time.LocalDate;
 
+@Document(collection = "estudiantes")
 public class Estudiante {
-
+    @Id
     @Pattern(regexp = "^\\d{10}$", message = "La cédula debe tener exactamente 10 dígitos")
     @NotBlank(message = "La cédula es obligatoria")
     private String cedula;

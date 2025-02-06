@@ -23,8 +23,9 @@
         <li><a href="/">Inicio</a></li>
         <li><a href="#cursos">Cursos</a></li>
         <li><a href="#ubicacion">Ubicación</a></li>
-        <li><a href="#" class="btn-registro" data-auth-modal="modal-registro">Registrarse</a></li>
-        <li><a href="#" class="btn-registro" data-auth-modal="modal-seleccion-registro">Registrarse</a></li>
+        <!-- Botón para abrir el modal -->
+        <li><a href="#" class="btn-registro" data-auth-modal="modal-seleccion-registro">Registrate</a></li>
+        <li><a href="#" class="btn-registro" data-auth-modal="modal-login">Iniciar Sesion</a></li>
     </ul>
 </nav>
 
@@ -203,20 +204,19 @@
     <div id="mapa" class="mapa"></div>
 </section>
 
-<!-- Modal de Selección de Registro -->
+<!-- Modal de selección de registro -->
 <div id="modal-seleccion-registro" class="modal">
     <div class="modal-content">
         <span class="modal-close">&times;</span>
-        <h2>Selecciona tu tipo de registro</h2>
-        <button id="btn-registro-estudiante">Registro de Estudiante</button>
-        <button id="btn-registro-profesor">Registro de Profesor</button>
+        <h2>Registrarse como:</h2>
+        <button id="btn-registro-estudiante">Estudiante</button>
+        <button id="btn-registro-profesor">Profesor</button>
     </div>
 </div>
-
-<!-- Modal de Inicio de Sesión -->
+<!-- Modal de selección de inicio de sesion -->
 <div id="modal-login" class="modal">
     <div class="modal-content">
-        <span class="close">&times;</span>
+        <span class="modal-close">&times;</span>
         <h2>Iniciar Sesión</h2>
         <form th:action="@{/iniciarSesion}" method="post">
             <div class="form-group">
@@ -233,45 +233,39 @@
     </div>
 </div>
 
-<!-- Modal de Registro -->
+<!-- Modal de selección de registro estudiante -->
 <div id="modal-registro" class="modal">
     <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Registro</h2>
-        <form th:action="@{/Estudiante/registro}" th:object="${estudiante}" method="post">
+        <span class="modal-close">&times;</span>
+        <h2>Registro de Estudiante</h2>
+        <form th:action="@{/Estudiante/registro}" method="POST">
             <div>
                 <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" th:field="*{nombre}" placeholder="Tu nombre completo">
-                <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="error"></span>
+                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
             </div>
             <div>
                 <label for="email">Correo electrónico:</label>
-                <input type="email" id="email" th:field="*{email}" placeholder="ejemplo@correo.com">
-                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></span>
+                <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" required>
             </div>
             <div>
-                <label for="password-registro">Contraseña:</label>
-                <input type="password" id="password-registro" th:field="*{password}" placeholder="Crea una contraseña">
-                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></span>
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" placeholder="Crea una contraseña" required>
             </div>
             <div>
                 <label for="telefono">Teléfono:</label>
-                <input type="tel" id="telefono" th:field="*{telefono}" placeholder="Número de contacto">
-                <span th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}" class="error"></span>
+                <input type="tel" id="telefono" name="telefono" placeholder="Número de contacto" required>
             </div>
             <div>
                 <label for="fechaNacimiento">Fecha de nacimiento:</label>
-                <input type="date" id="fechaNacimiento" th:field="*{fechaNacimiento}">
-                <span th:if="${#fields.hasErrors('fechaNacimiento')}" th:errors="*{fechaNacimiento}" class="error"></span>
+                <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
             </div>
             <div>
                 <label for="direccion">Dirección:</label>
-                <input type="text" id="direccion" th:field="*{direccion}" placeholder="Tu dirección completa">
-                <span th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}" class="error"></span>
+                <input type="text" id="direccion" name="direccion" placeholder="Tu dirección completa" required>
             </div>
             <div>
                 <label for="curso">Curso de interés:</label>
-                <select id="curso" th:field="*{curso}">
+                <select id="curso" name="curso" required>
                     <option value="">Seleccione un curso</option>
                     <option value="HTML y CSS">HTML y CSS</option>
                     <option value="JavaScript">JavaScript</option>
@@ -280,87 +274,76 @@
                     <option value="React">React</option>
                     <option value="Node.js">Node.js</option>
                 </select>
-                <span th:if="${#fields.hasErrors('curso')}" th:errors="*{curso}" class="error"></span>
             </div>
             <div>
                 <label>Género:</label>
                 <div class="flex">
-                    <label><input type="radio" th:field="*{genero}" value="masculino"> Masculino</label>
-                    <label><input type="radio" th:field="*{genero}" value="femenino"> Femenino</label>
+                    <label><input type="radio" name="genero" value="masculino" required> Masculino</label>
+                    <label><input type="radio" name="genero" value="femenino" required> Femenino</label>
                 </div>
-                <span th:if="${#fields.hasErrors('genero')}" th:errors="*{genero}" class="error"></span>
             </div>
             <button type="submit">Registrarse</button>
         </form>
     </div>
 </div>
 
-<!-- Modal de Registro de Profesor -->
+<!-- Modal de selección de inicio de profesor -->
 <div id="modal-registro-profesor" class="modal">
     <div class="modal-content">
-        <span class="close">&times;</span>
+        <span class="modal-close">&times;</span>
         <h2>Registro de Profesor</h2>
-        <form th:action="@{/Profesor/registro}" th:object="${profesor}" method="post">
+        <form th:action="@{/profesor/registro}" method="POST">
             <div>
                 <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" th:field="*{nombre}" placeholder="Tu nombre completo">
-                <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="error"></span>
+                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
             </div>
             <div>
                 <label for="email">Correo electrónico:</label>
-                <input type="email" id="email" th:field="*{email}" placeholder="ejemplo@correo.com">
-                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></span>
+                <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" required>
             </div>
             <div>
-                <label for="password-registro">Contraseña:</label>
-                <input type="password" id="password-registro" th:field="*{password}" placeholder="Crea una contraseña">
-                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></span>
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" placeholder="Crea una contraseña" required>
             </div>
             <div>
                 <label for="telefono">Teléfono:</label>
-                <input type="tel" id="telefono" th:field="*{telefono}" placeholder="Número de contacto">
-                <span th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}" class="error"></span>
+                <input type="tel" id="telefono" name="telefono" placeholder="Número de contacto" required>
             </div>
             <div>
                 <label for="fechaNacimiento">Fecha de nacimiento:</label>
-                <input type="date" id="fechaNacimiento" th:field="*{fechaNacimiento}">
-                <span th:if="${#fields.hasErrors('fechaNacimiento')}" th:errors="*{fechaNacimiento}" class="error"></span>
+                <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
             </div>
             <div>
                 <label for="direccion">Dirección:</label>
-                <input type="text" id="direccion" th:field="*{direccion}" placeholder="Tu dirección completa">
-                <span th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}" class="error"></span>
+                <input type="text" id="direccion" name="direccion" placeholder="Tu dirección completa" required>
             </div>
             <div>
                 <label for="titulo">Título profesional:</label>
-                <select id="titulo" th:field="*{titulo}">
+                <select id="titulo" name="titulo" required>
                     <option value="">Seleccione un título</option>
                     <option value="Ingeniero en Software">Ingeniero en Software</option>
                     <option value="Ing. en Sistemas">Ing. en Sistemas</option>
                     <option value="Técnico en Software">Técnico en Software</option>
                     <option value="Carreras afines">Carreras afines</option>
                 </select>
-                <span th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}" class="error"></span>
             </div>
             <div>
                 <label for="aniosExperiencia">Años de experiencia:</label>
-                <input type="number" id="aniosExperiencia" th:field="*{aniosExperiencia}" placeholder="Número de años">
-                <span th:if="${#fields.hasErrors('aniosExperiencia')}" th:errors="*{aniosExperiencia}" class="error"></span>
+                <input type="number" id="aniosExperiencia" name="aniosExperiencia" placeholder="Número de años" required>
             </div>
             <div>
                 <label>Género:</label>
                 <div class="flex">
-                    <label><input type="radio" th:field="*{genero}" value="masculino"> Masculino</label>
-                    <label><input type="radio" th:field="*{genero}" value="femenino"> Femenino</label>
+                    <label><input type="radio" name="genero" value="masculino" required> Masculino</label>
+                    <label><input type="radio" name="genero" value="femenino" required> Femenino</label>
                 </div>
-                <span th:if="${#fields.hasErrors('genero')}" th:errors="*{genero}" class="error"></span>
             </div>
             <button type="submit">Registrarse</button>
         </form>
     </div>
 </div>
 
-
+<!-- footer-->
 <footer class="footer">
     <div class="footer-wave"></div>
     <div class="footer-content">

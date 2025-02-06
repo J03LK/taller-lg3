@@ -14,7 +14,7 @@ public class IniciarSesionControlador {
 
     @GetMapping("/iniciarSesion")
     public String mostrarPaginaIniciarSesion() {
-        return "iniciarSesion"; // Esto renderiza iniciarSesion.html
+        return "iniciarSesion"; // Renderiza la vista de inicio de sesión
     }
 
     @PostMapping("/iniciarSesion")
@@ -25,7 +25,7 @@ public class IniciarSesionControlador {
         // Crear un objeto Estudiante (simulado)
         Estudiante estudiante = new Estudiante();
         estudiante.setNombre("Juan Pérez"); // Ejemplo de nombre
-        estudiante.setEmail("juan@gmail..com"); // Ejemplo de email
+        estudiante.setEmail("juan@gmail.com"); // Ejemplo de email
         estudiante.setTelefono("123456789"); // Ejemplo de teléfono
         estudiante.setFechaNacimiento(LocalDate.of(1990, 1, 1)); // Ejemplo de fecha de nacimiento
         estudiante.setDireccion("Calle Falsa 123"); // Ejemplo de dirección
@@ -36,6 +36,6 @@ public class IniciarSesionControlador {
         redirectAttributes.addFlashAttribute("estudiante", estudiante);
 
         // Redirigir a la página del estudiante
-        return "redirect:/estudiante";
+        return "redirect:/estudiante/estudiante";
     }
 }

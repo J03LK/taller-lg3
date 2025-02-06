@@ -1,7 +1,20 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Asegurarse de que los modales estén ocultos al cargar la página
+    // PRIMERO: Asegurarse de que los modales estén ocultos al cargar la página
     document.querySelectorAll('.modal').forEach(modal => {
         modal.style.display = 'none';
+    });
+
+    // Manejo de modales para los cursos
+    const botonesVerMas = document.querySelectorAll('.btn-ver-mas');
+    botonesVerMas.forEach(boton => {
+        boton.onclick = function(e) {
+            e.preventDefault();
+            const modalId = this.getAttribute('data-modal');
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'flex';
+            }
+        };
     });
 
     // Botones de autenticación (abrir modal de login o registro)
@@ -11,25 +24,9 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
             const modalId = this.getAttribute('data-auth-modal');
             const modal = document.getElementById(modalId);
-            if (modal) modal.style.display = 'block';
+            if (modal) modal.style.display = 'flex'; // Cambiado a flex para consistencia
         };
     });
-
-    // Botones de cierre para todos los modales
-    const closeButtons = document.querySelectorAll('.modal-close');
-    closeButtons.forEach(button => {
-        button.onclick = function () {
-            const modal = this.closest('.modal');
-            if (modal) modal.style.display = 'none';
-        };
-    });
-
-    // Cerrar modales al hacer clic fuera del contenido
-    window.onclick = function (event) {
-        if (event.target.classList.contains('modal')) {
-            event.target.style.display = 'none';
-        }
-    };
 
     // Manejo del modal de selección de registro
     const btnRegistroEstudiante = document.getElementById('btn-registro-estudiante');
@@ -41,14 +38,32 @@ document.addEventListener('DOMContentLoaded', function () {
     if (btnRegistroEstudiante && btnRegistroProfesor) {
         btnRegistroEstudiante.onclick = function () {
             modalSeleccionRegistro.style.display = 'none';
-            modalRegistroEstudiante.style.display = 'block';
+            modalRegistroEstudiante.style.display = 'flex'; // Cambiado a flex
         };
 
         btnRegistroProfesor.onclick = function () {
             modalSeleccionRegistro.style.display = 'none';
-            modalRegistroProfesor.style.display = 'block';
+            modalRegistroProfesor.style.display = 'flex'; // Cambiado a flex
         };
     }
+
+    // UN SOLO manejo unificado de botones de cierre
+    const closeButtons = document.querySelectorAll('.close, .modal-close');
+    closeButtons.forEach(button => {
+        button.onclick = function() {
+            const modal = this.closest('.modal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        };
+    });
+
+    // UN SOLO manejador para cerrar al hacer clic fuera
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            event.target.style.display = 'none';
+        }
+    };
 
     // Manejo del formulario de registro de estudiante
     const registroFormEstudiante = document.querySelector('#modal-registro form');
