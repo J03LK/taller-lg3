@@ -4,7 +4,7 @@
 /* Contenedor del modal para mejor centrado */
 #modal-login,
 #modal-registro {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     position: fixed;
@@ -50,7 +50,7 @@
 /* Etiquetas */
 #modal-login label,
 #modal-registro label {
-    display: block;
+    display: none;
     margin-bottom: 8px;
     font-weight: 500;
     color: #333;
@@ -99,7 +99,7 @@
 
 /* Enlace de contraseña olvidada */
 #modal-login .forgot-password {
-    display: block;
+    display: none;
     text-align: center;
     margin-top: 15px;
     color: #007bff;
@@ -114,7 +114,7 @@
 
 /* Diseño flexible para algunos campos */
 #modal-registro .flex {
-    display: flex;
+    display: none;
     gap: 20px;
     margin-top: 5px;
 }
@@ -162,5 +162,109 @@
 }
 
 #modal-seleccion-registro button:hover {
+    background-color: #0056b3;
+}
+/* Estilos para el modal de registro de profesor */
+#modal-registro-profesor {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+#modal-registro-profesor .modal-content {
+    width: 90%;
+    max-width: 500px;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+    text-align: left;
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Botón de cierre */
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #aaa;
+    transition: color 0.3s ease-in-out;
+}
+
+.modal-close:hover {
+    color: #333;
+}
+
+/* Estilos para etiquetas y campos de entrada */
+#modal-registro-profesor label {
+    display: none;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #333;
+}
+
+#modal-registro-profesor input,
+#modal-registro-profesor select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s ease-in-out;
+}
+
+#modal-registro-profesor input:focus,
+#modal-registro-profesor select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Diseño flexible para radio buttons */
+#modal-registro-profesor .flex {
+    display: none;
+    gap: 20px;
+    margin-top: 5px;
+}
+
+/* Estilo del botón de registro */
+#modal-registro-profesor button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#modal-registro-profesor button[type="submit"]:hover {
     background-color: #0056b3;
 }

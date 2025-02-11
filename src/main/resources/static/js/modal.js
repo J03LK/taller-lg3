@@ -66,31 +66,31 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     // Manejo del formulario de registro de estudiante
-    const registroFormEstudiante = document.querySelector('#modal-registro form');
-    if (registroFormEstudiante) {
-        registroFormEstudiante.addEventListener('submit', function (e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            fetch(this.action, {
-                method: this.method.toUpperCase(),
-                body: new URLSearchParams(formData),
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.message === "Registro exitoso!") {
-                    alert('Registro exitoso.');
-                    window.location.href = data.redirectUrl;
-                } else {
-                    alert('Error en el registro: ' + (data.message || 'Intente nuevamente.'));
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error en el registro. Verifique su conexión.');
-            });
+    document.querySelector('#modal-registro form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        fetch(this.action, {
+                        method: this.method.toUpperCase(),
+                        body: JSON.stringify(Object.fromEntries(formData)),
+                        headers: { 'Content-Type': 'application/json' }
+                    })
+        .then(response => {
+            if (response.redirected) {  // Si el servidor redirige, seguimos la redirección
+                window.location.href = response.url;
+            } else {
+                return response.text();
+            }
+        })
+        .then(data => {
+            if (data) alert(data);  // Si hay un mensaje, mostrarlo
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error en el registro. Verifique su conexión.');
         });
-    }
+    });
+
 
     // Manejo del formulario de registro de profesor
     const registroFormProfesor = document.querySelector('#modal-registro-profesor form');
@@ -100,8 +100,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const formData = new FormData(this);
             fetch(this.action, {
                 method: this.method.toUpperCase(),
-                body: new URLSearchParams(formData),
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                body: JSON.stringify(Object.fromEntries(formData)),
+                headers: { 'Content-Type': 'application/json' }
             })
             .then(response => response.json())
             .then(data => {

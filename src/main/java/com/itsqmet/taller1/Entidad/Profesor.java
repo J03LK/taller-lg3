@@ -10,9 +10,6 @@ import java.time.LocalDate;
 public class Profesor {
 
     @Id
-    @Pattern(regexp = "^\\d{10}$", message = "La cédula debe tener exactamente 10 dígitos numéricos")
-    private String cedula; // La cédula será el ID en MongoDB
-
     @Pattern(regexp = "^[A-Z][a-zA-Z\\s]*$", message = "El nombre debe comenzar con mayúscula y solo contener letras y espacios")
     @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
@@ -48,13 +45,7 @@ public class Profesor {
     private int aniosExperiencia;
 
     // Getters y Setters
-    public String getCedula() {
-        return cedula;
-    }
 
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
-    }
 
     public String getNombre() {
         return nombre;

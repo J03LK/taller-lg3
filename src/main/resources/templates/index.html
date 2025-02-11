@@ -6,10 +6,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <link rel="stylesheet" th:href="@{/css/modal.css}">
-    <link rel="stylesheet" th:href="@{/css/modalCierre.css}">
     <link rel="stylesheet" th:href="@{/css/auth-modal.css}">
 
 </head>
@@ -209,11 +209,13 @@
     <div class="modal-content">
         <span class="modal-close">&times;</span>
         <h2>Registrarse como:</h2>
-        <button id="btn-registro-estudiante">Estudiante</button>
-        <button id="btn-registro-profesor">Profesor</button>
+        <button id="btn-registro-estudiante">🎓Estudiante</button>
+        <button id="btn-registro-profesor">🧑🏻‍🏫Profesor</button>
     </div>
 </div>
-<!-- Modal de selección de inicio de sesion -->
+
+
+<!-- Modal de selección de inicio de sesión -->
 <div id="modal-login" class="modal">
     <div class="modal-content">
         <span class="modal-close">&times;</span>
@@ -221,51 +223,58 @@
         <form th:action="@{/iniciarSesion}" method="post">
             <div class="form-group">
                 <label for="username">Correo Electrónico:</label>
-                <input type="text" id="username" name="username" required>
+                <div class="input-container">
+                    <i class="fa fa-user"></i>
+                    <input type="text" id="username" name="username" placeholder="Ingresa tu correo" required>
+                </div>
             </div>
             <div class="form-group">
                 <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" required>
+                <div class="input-container">
+                    <input type="password" id="password-inicioSesion" name="password" placeholder="Ingresa tu contraseña" required>
+                    <i class="fa fa-eye" id="togglePassword"></i>
+                </div>
             </div>
-            <button type="submit" class="btn-login">Iniciar Sesión</button>
-            <a th:href="@{/olvidaste-contrasena}" class="forgot-password">¿Olvidaste tu contraseña?</a>
+            <button type="submit" class="btn-login"><i class="fa fa-sign-in-alt"></i> Iniciar Sesión</button>
         </form>
     </div>
 </div>
 
+
 <!-- Modal de selección de registro estudiante -->
-<div id="modal-registro" class="modal">
+<div id="modal-registro" class="modal" aria-labelledby="modal-registro-title" aria-describedby="modal-registro-description">
     <div class="modal-content">
-        <span class="modal-close">&times;</span>
-        <h2>Registro de Estudiante</h2>
-        <form th:action="@{/Estudiante/registro}" method="POST">
+        <span class="modal-close" aria-label="Cerrar modal">&times;</span>
+        <h2 id="modal-registro-title">Registro de Estudiante</h2>
+        <p id="modal-registro-description">Completa el formulario para registrarte como estudiante.</p>
+        <form th:action="@{/Estudiante/estudiante}" th:object="${estudiante}" method="POST">
             <div>
                 <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
+                <input type="text" th:field="*{nombre}" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
             </div>
             <div>
                 <label for="email">Correo electrónico:</label>
-                <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" required>
+                <input type="email" th:field="*{email}" id="email" name="email" placeholder="ejemplo@correo.com" required>
             </div>
             <div>
                 <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" placeholder="Crea una contraseña" required>
+                <input type="password" th:field="*{password}" id="password" name="password" placeholder="Crea una contraseña" required>
             </div>
             <div>
                 <label for="telefono">Teléfono:</label>
-                <input type="tel" id="telefono" name="telefono" placeholder="Número de contacto" required>
+                <input type="tel" th:field="*{telefono}" id="telefono" name="telefono" placeholder="Número de contacto" required>
             </div>
             <div>
                 <label for="fechaNacimiento">Fecha de nacimiento:</label>
-                <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
+                <input type="date" th:field="*{fechaNacimiento}" id="fechaNacimiento" name="fechaNacimiento" required>
             </div>
             <div>
                 <label for="direccion">Dirección:</label>
-                <input type="text" id="direccion" name="direccion" placeholder="Tu dirección completa" required>
+                <input type="text" th:field="*{direccion}" id="direccion" name="direccion" placeholder="Tu dirección completa" required>
             </div>
             <div>
                 <label for="curso">Curso de interés:</label>
-                <select id="curso" name="curso" required>
+                <select th:field="*{curso}" id="curso" required>
                     <option value="">Seleccione un curso</option>
                     <option value="HTML y CSS">HTML y CSS</option>
                     <option value="JavaScript">JavaScript</option>
@@ -275,51 +284,46 @@
                     <option value="Node.js">Node.js</option>
                 </select>
             </div>
-            <div>
-                <label>Género:</label>
-                <div class="flex">
-                    <label><input type="radio" name="genero" value="masculino" required> Masculino</label>
-                    <label><input type="radio" name="genero" value="femenino" required> Femenino</label>
-                </div>
-            </div>
+
             <button type="submit">Registrarse</button>
         </form>
     </div>
 </div>
+
 
 <!-- Modal de selección de inicio de profesor -->
 <div id="modal-registro-profesor" class="modal">
     <div class="modal-content">
         <span class="modal-close">&times;</span>
         <h2>Registro de Profesor</h2>
-        <form th:action="@{/profesor/registro}" method="POST">
+        <form th:action="@{/Profesor/profesor}" th:object="${profesor}"  method="POST">
             <div>
                 <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
+                <input type="text" th:field="*{nombre}" id="nombre-profesor" name="nombre" placeholder="Tu nombre completo" required>
             </div>
             <div>
                 <label for="email">Correo electrónico:</label>
-                <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" required>
+                <input type="email" th:field="*{email}" id="email-profesor" name="email" placeholder="ejemplo@correo.com" required>
             </div>
             <div>
                 <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" placeholder="Crea una contraseña" required>
+                <input type="password" th:field="*{password}" id="password-profesor" name="password" placeholder="Crea una contraseña" required>
             </div>
             <div>
                 <label for="telefono">Teléfono:</label>
-                <input type="tel" id="telefono" name="telefono" placeholder="Número de contacto" required>
+                <input type="tel" th:field="*{telefono}" id="telefono-profesor" name="telefono" placeholder="Número de contacto" required>
             </div>
             <div>
                 <label for="fechaNacimiento">Fecha de nacimiento:</label>
-                <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
+                <input type="date" th:field="*{fechaNacimiento}" id="fechaNacimiento-profesor" name="fechaNacimiento" required>
             </div>
             <div>
                 <label for="direccion">Dirección:</label>
-                <input type="text" id="direccion" name="direccion" placeholder="Tu dirección completa" required>
+                <input type="text" th:field="*{direccion}" id="direccion-profesor" name="direccion" placeholder="Tu dirección completa" required>
             </div>
             <div>
                 <label for="titulo">Título profesional:</label>
-                <select id="titulo" name="titulo" required>
+                <select th:field="*{titulo}" id="titulo" required>
                     <option value="">Seleccione un título</option>
                     <option value="Ingeniero en Software">Ingeniero en Software</option>
                     <option value="Ing. en Sistemas">Ing. en Sistemas</option>
@@ -330,13 +334,6 @@
             <div>
                 <label for="aniosExperiencia">Años de experiencia:</label>
                 <input type="number" id="aniosExperiencia" name="aniosExperiencia" placeholder="Número de años" required>
-            </div>
-            <div>
-                <label>Género:</label>
-                <div class="flex">
-                    <label><input type="radio" name="genero" value="masculino" required> Masculino</label>
-                    <label><input type="radio" name="genero" value="femenino" required> Femenino</label>
-                </div>
             </div>
             <button type="submit">Registrarse</button>
         </form>

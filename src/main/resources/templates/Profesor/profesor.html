@@ -3,15 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Cursos</title>
-    <link rel="stylesheet" href="/taller1/src/main/resources/static/css/portal.css">
-    <link rel="stylesheet" href="/taller1/src/main/resources/static/css/certificados.css">
-    <link rel="stylesheet" href="/taller1/src/main/resources/static/css/botones.css">
-    <link rel="stylesheet" href="/taller1/src/main/resources/static/css/estilos.css">
-    <link rel="stylesheet" href="/taller1/src/main/resources/static/css/navbar.css">
-    <link rel="stylesheet" href="/taller1/src/main/resources/static/css/portal.css">
-    <link rel="stylesheet" href="/taller1/src/main/resources/static/css/certificados.css">
-    <link rel="stylesheet" href="/taller1/src/main/resources/static/css/botones.css">
-    <link rel="stylesheet" href="/taller1/src/main/resources/static/css/evaluacion.css">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" th:href="@{/css/portal.css}">
+    <link rel="stylesheet" th:href="@{/css/certificados.css}">
+    <link rel="stylesheet" th:href="@{/css/botones.css}">
+    <link rel="stylesheet" th:href="@{/css/evaluacion.css}">
     
 </head>
 <body>
@@ -20,14 +17,14 @@
 </header>
 <nav class="navbar">
     <div class="nav-brand">
-        <img src="/taller1/src/main/resources/static/imagenes/logo.png" alt="Logo" class="logo">
+        <img th:src="@{/imagenes/logo.png}" alt="Logo" class="logo">
         <span class="brand-text">TechAcademy</span>
     </div>
     <ul class="nav-menu">
         <li><a href="#inicio">Inicio</a></li>
         <li><a href="#cursos">Cursos</a></li>
         <li><a href="#ubicacion">Ubicación</a></li>
-        <li><a th:href="@{/logout}" class="btn-registro">Cerrar sesion</a></li>
+        <li><a th:href="@{/}" class="btn-registro">Cerrar sesion</a></li>
     </ul>
 </nav>
 <table class="students-table">
@@ -43,14 +40,11 @@
     <!-- Iterar sobre la lista de estudiantes -->
     <tr th:each="estudiante : ${estudiantes}">
         <td th:text="${estudiante.nombre}">Nombre del estudiante</td>
-        <td th:text="${estudiante.curso.nombre}">Nombre del curso</td>
-        <td th:text="${estudiante.progreso} + '%'">Progreso</td>
-        <td>
-            <button class="btn btn-view">Ver detalles</button>
-        </td>
+        <td th:text="${estudiante.curso}">Nombre del curso</td>  <!-- Acceder directamente a 'curso' -->
     </tr>
     </tbody>
 </table>
+
 
 <!-- Portal del Profesor -->
 <section id="portal-instructor" class="portal-section">
@@ -58,7 +52,6 @@
     <div class="portal-grid">
         <div class="portal-card">
             <div class="portal-header">
-                <img src="/taller1/src/main/resources/static/imagenes/iconos/students.png" alt="Estudiantes" class="portal-icon">
                 <h3>Gestión de Estudiantes</h3>
             </div>
             <div class="portal-content">
@@ -91,7 +84,6 @@
 
         <div class="portal-card">
             <div class="portal-header">
-                <img src="/taller1/src/main/resources/static/imagenes/iconos/content.png" alt="Contenido" class="portal-icon">
                 <h3>Gestión de Contenido</h3>
             </div>
             <div class="portal-content">
@@ -148,5 +140,33 @@
         </div>
     </div>
 </section>
+<!-- footer-->
+<footer class="footer">
+    <div class="footer-wave"></div>
+    <div class="footer-content">
+        <div class="footer-section">
+            <img th:src="@{/imagenes/logo.png}" alt="Logo Footer" class="footer-logo">
+            <p>Email: info@techacademy.com</p>
+            <p>Teléfono: (123) 456-7890</p>
+        </div>
+        <div class="footer-section">
+            <h3>Síguenos</h3>
+            <div class="social-links">
+                <img th:src="@{/imagenes/redesSociales/facebook.png}" alt="Facebook" class="social-icon">
+                <img th:src="@{/imagenes/redesSociales/x.jpeg}" alt="X" class="social-icon">
+                <img th:src="@{/imagenes/redesSociales/linkedin.png}" alt="LinkedIn" class="social-icon">
+            </div>
+        </div>
+        <div class="footer-section">
+            <h3>Enlaces Rápidos</h3>
+            <a href="/">Inicio</a>
+            <a href="#cursos">Cursos</a>
+            <a href="#ubicacion">Ubicación</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 TechAcademy. Todos los derechos reservados.</p>
+    </div>
+</footer>
 </body>
 </html>

@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface EstudianteRepositorio extends MongoRepository<Estudiante, String> {
     List<Estudiante> findByNombreContainingIgnoreCase(String nombre);
+    List<Estudiante> findByEmail(String email);// Método para buscar por nombre
 }

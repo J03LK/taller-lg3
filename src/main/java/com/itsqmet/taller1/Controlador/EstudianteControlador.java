@@ -1,45 +1,74 @@
 package com.itsqmet.taller1.Controlador;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import com.itsqmet.taller1.Entidad.Estudiante;
-import jakarta.validation.Valid;
+import com.itsqmet.taller1.Servicio.EstudianteServicio;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import jakarta.validation.Valid;
 
 @Controller
-@RequestMapping("/Estudiante")
 public class EstudianteControlador {
 
-    @PostMapping("/registro")
-    @ResponseBody
-    public ResponseEntity<?> procesarRegistro(@Valid @ModelAttribute("estudiante") Estudiante estudiante,
-                                              BindingResult result) {
-        if (result.hasErrors()) {
-            Map<String, String> errors = new HashMap<>();
-            result.getFieldErrors().forEach(error ->
-                    errors.put(error.getField(), error.getDefaultMessage())
-            );
-            return ResponseEntity.badRequest().body(errors);
-        }
+    @Autowired
+    private EstudianteServicio estudianteServicio;
 
-        try {
-            // Lógica para guardar el estudiante
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Registro exitoso!");
-            response.put("redirectUrl", "/Estudiante/estudiante?id=" + estudiante.getCedula());
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            Map<String, String> error = new HashMap<>();
-            error.put("message", "Error al procesar el registro");
-            return ResponseEntity.internalServerError().body(error);
+    // Mostrar la lista de estudiantes
+    @GetMapping("/estudiantes")
+    public String listarEstudiantes(@RequestParam(required = false) String nombre, Model model) {
+        model.addAttribute("estudiantes", estudianteServicio.buscarEstudiantePorNombre(nombre));
+        return "Estudiante/estudiante";
+    }
+
+    // Mostrar formulario para crear un estudiante
+    @GetMapping("/index")
+    public String mostrarFormulario(Model model) {
+        model.addAttribute("estudiante", new Estudiante());
+        return "index";
+    }
+
+    // Guardar estudiante
+    @PostMapping("/Estudiante/estudiante")
+    @ResponseBody
+    public ResponseEntity<?> guardarEstudiante(@RequestBody Estudiante estudiante) {
+        estudianteServicio.guardarEstudiante(estudiante); // Guarda el estudiante en la base de datos
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Registro exitoso!");
+        response.put("redirectUrl", "/estudiantes");
+        return ResponseEntity.ok(response);
+    }
+
+    // Eliminar un estudiante por nombre
+    @GetMapping("/eliminar/{nombre}")
+    public String eliminarEstudiante(@PathVariable String nombre) {
+        boolean eliminado = estudianteServicio.eliminarEstudiante(nombre);
+        if (!eliminado) {
+            return "error";  // Redirigir a una página de error si no se pudo eliminar
         }
+        return "redirect:/estudiantes";
     }
 }
+
+
+
+
+
+
+
 
 
 
