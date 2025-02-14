@@ -1,78 +1,66 @@
 package com.itsqmet.taller1.Controlador;
 
-
 import com.itsqmet.taller1.Entidad.Estudiante;
 import com.itsqmet.taller1.Servicio.EstudianteServicio;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.ui.Model;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-
-import jakarta.validation.Valid;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
+@RequestMapping("/estudiantes") // <--  Mapea este controlador a /estudiantes
 public class EstudianteControlador {
 
-    @Autowired
-    private EstudianteServicio estudianteServicio;
+    private final EstudianteServicio estudianteServicio;
 
-    // Mostrar la lista de estudiantes
-    @GetMapping("/estudiantes")
-    public String listarEstudiantes(@RequestParam(required = false) String nombre, Model model) {
-        model.addAttribute("estudiantes", estudianteServicio.buscarEstudiantePorNombre(nombre));
-        return "Estudiante/estudiante";
+    public EstudianteControlador(EstudianteServicio estudianteServicio) {
+        this.estudianteServicio = estudianteServicio;
     }
 
-    // Mostrar formulario para crear un estudiante
-    @GetMapping("/index")
+    @GetMapping // <-- Esto ahora mapea a /estudiantes
+    public String index(Model model) {
+        model.addAttribute("estudiante", new Estudiante());
+        return "index"; // Si quieres que este metodo retorne la misma vista "index" que el IndexControlador, puedes dejarlo así.
+    }
+
+    @GetMapping("/registro") // <-- Esto mapea a /estudiantes/registro
     public String mostrarFormulario(Model model) {
         model.addAttribute("estudiante", new Estudiante());
-        return "index";
+        return "estudiante";
     }
 
-    // Guardar estudiante
-    @PostMapping("/Estudiante/estudiante")
-    @ResponseBody
-    public ResponseEntity<?> guardarEstudiante(@RequestBody Estudiante estudiante) {
-        estudianteServicio.guardarEstudiante(estudiante); // Guarda el estudiante en la base de datos
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "Registro exitoso!");
-        response.put("redirectUrl", "/estudiantes");
-        return ResponseEntity.ok(response);
-    }
-
-    // Eliminar un estudiante por nombre
-    @GetMapping("/eliminar/{nombre}")
-    public String eliminarEstudiante(@PathVariable String nombre) {
-        boolean eliminado = estudianteServicio.eliminarEstudiante(nombre);
-        if (!eliminado) {
-            return "error";  // Redirigir a una página de error si no se pudo eliminar
+    @PostMapping("/registro") // <-- Esto mapea a /estudiantes/registro
+    public String registrarEstudiante(@ModelAttribute Estudiante estudiante, RedirectAttributes redirectAttributes) {
+        try {
+            estudianteServicio.guardar(estudiante);
+            redirectAttributes.addFlashAttribute("mensaje", "Registro exitoso. Por favor inicia sesión.");
+            return "redirect:/"; // Redirige a la raíz
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Error al registrar: " + e.getMessage());
+            return "redirect:/estudiantes/registro"; // Redirige al formulario de registro
         }
-        return "redirect:/estudiantes";
+    }
+
+    @PostMapping("/estudiantes")
+    public ResponseEntity<String> registrarEstudiantePost(@RequestBody Estudiante estudiante) {
+        try {
+            estudianteServicio.guardar(estudiante);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Estudiante registrado con éxito");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al registrar: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/Estudiante/estudiante")
+    public String paginaEstudiante(Authentication authentication, Model model) {
+        String email = authentication.getName();
+        estudianteServicio.buscarPorEmail(email).ifPresent(estudiante ->
+                model.addAttribute("estudiante", estudiante)
+        );
+        return "Estudiante/estudiante";
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -6,13 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@Controller // Asegúrate de usar @Controller, no @RestController
+@Controller
 public class IndexControlador {
 
-        @GetMapping("/")
-        public String mostrarInicio(Model model) {
-            model.addAttribute("profesor", new Profesor());
-            model.addAttribute("estudiante", new Estudiante());
-            return "index"; // Renderiza la plantilla index.html
-        }
+    @GetMapping("/")
+    public String mostrarInicio(Model model) {
+        model.addAttribute("profesor", new Profesor());
+        model.addAttribute("estudiante", new Estudiante());
+        return "index";
     }
+}
+

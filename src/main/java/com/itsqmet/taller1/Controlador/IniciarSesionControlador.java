@@ -1,10 +1,15 @@
 package com.itsqmet.taller1.Controlador;
 
-
 import com.itsqmet.taller1.Entidad.Estudiante;
 import com.itsqmet.taller1.Entidad.Profesor;
 import com.itsqmet.taller1.Repositorio.EstudianteRepositorio;
 import com.itsqmet.taller1.Repositorio.ProfesorRepositorio;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,60 +17,75 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
-
 
 @Controller
 public class IniciarSesionControlador {
 
     private final EstudianteRepositorio estudianteRepositorio;
     private final ProfesorRepositorio profesorRepositorio;
+    private final AuthenticationManager authenticationManager;
 
-    public IniciarSesionControlador(EstudianteRepositorio estudianteRepositorio, ProfesorRepositorio profesorRepositorio) {
+    public IniciarSesionControlador(
+            EstudianteRepositorio estudianteRepositorio,
+            ProfesorRepositorio profesorRepositorio,
+            AuthenticationManager authenticationManager) {
         this.estudianteRepositorio = estudianteRepositorio;
         this.profesorRepositorio = profesorRepositorio;
+        this.authenticationManager = authenticationManager;
     }
 
     @GetMapping("/iniciarSesion")
     public String mostrarPaginaIniciarSesion() {
-        return "iniciarSesion"; // Renderiza la vista de inicio de sesión
+        return "iniciarSesion";
     }
 
     @PostMapping("/iniciarSesion")
-    public String iniciarSesion(@RequestParam String username, @RequestParam String password, RedirectAttributes redirectAttributes) {
-        // Verificar en la colección de estudiantes
-        List<Estudiante> estudiantes = estudianteRepositorio.findByEmail(username);
-        if (!estudiantes.isEmpty() && estudiantes.get(0).getPassword().equals(password)) {
-            return "redirect:/Estudiante/estudiante";
-        }
+    public String iniciarSesion(@RequestParam String username,
+                                @RequestParam String password,
+                                HttpServletRequest request) {
+        try {
+            UsernamePasswordAuthenticationToken authToken =
+                    new UsernamePasswordAuthenticationToken(username, password);
 
-        // Verificar en la colección de profesores
-        List<Profesor> profesores = profesorRepositorio.findByEmail(username);
-        if (!profesores.isEmpty() && profesores.get(0).getPassword().equals(password)) {
-            return "redirect:/Profesor/profesor";
-        }
+            Authentication authentication =
+                    authenticationManager.authenticate(authToken);
 
-        // Si no se encontró ninguna coincidencia
-        redirectAttributes.addFlashAttribute("error", "Credenciales inválidas. Verifica tu usuario y contraseña.");
-        return "redirect:/iniciarSesion";
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            Optional<Estudiante> estudiante = estudianteRepositorio.findByEmail(username);
+            Optional<Profesor> profesor = profesorRepositorio.findByEmail(username);
+
+            if (estudiante.isPresent()) {
+                return "redirect:/Estudiante/estudiante";
+            } else if (profesor.isPresent()) {
+                return "redirect:/Profesor/profesor";
+            }
+
+            return "redirect:/index";
+
+        } catch (AuthenticationException e) {
+            try {
+                return "redirect:/?error=" + URLEncoder.encode("Credenciales inválidas", StandardCharsets.UTF_8);
+            } catch (Exception ex) {
+                return "redirect:/?error=error_autenticacion";
+            }
+        }
     }
 
     @GetMapping("/Profesor/profesor")
     public String mostrarPaginaProfesor(Model model) {
-        // Obtener los estudiantes (o cualquier dato necesario)
-        List<Estudiante> estudiantes = estudianteRepositorio.findAll();  // Ejemplo para obtener todos los estudiantes
-
-        // Agregar la lista de estudiantes al modelo
+        List<Estudiante> estudiantes = estudianteRepositorio.findAll();
         model.addAttribute("estudiantes", estudiantes);
-
-        return "Profesor/profesor";  // La vista que contiene la tabla
+        return "Profesor/profesor";
     }
-    @GetMapping("/Estudiante/estudiante")
+
+    @GetMapping("/Estudiante/inicio") // Ruta modificada
     public String mostrarPaginaEstudiante(Model model) {
-        return "Estudiante/estudiante";  // La vista que contiene la tabla
+        return "Estudiante/estudiante";
     }
-
 }
-
 

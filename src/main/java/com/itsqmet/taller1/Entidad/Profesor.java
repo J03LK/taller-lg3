@@ -32,9 +32,6 @@ public class Profesor {
     @NotBlank(message = "La dirección es obligatoria")
     private String direccion;
 
-    @NotBlank(message = "Debe seleccionar un género")
-    private String genero;
-
     @NotBlank(message = "Debe especificar un título válido")
     @Pattern(regexp = "^(Ingeniero en Software|Ing\\. en Sistemas|Técnico en Software|Carreras afines)$",
             message = "El título debe ser uno de los siguientes: Ingeniero en Software, Ing. en Sistemas, Técnico en Software o carreras afines")
@@ -95,13 +92,6 @@ public class Profesor {
         this.direccion = direccion;
     }
 
-    public String getGenero() {
-        return genero;
-    }
-
-    public void setGenero(String genero) {
-        this.genero = genero;
-    }
 
     public String getTitulo() {
         return titulo;

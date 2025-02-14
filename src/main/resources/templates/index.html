@@ -16,7 +16,7 @@
 <body>
 <nav class="navbar">
     <div class="nav-brand">
-        <img th:src="@{imagenes/logo.png}" alt="Logo" class="logo">
+        <img th:src="@{/imagenes/logo.png}" alt="Logo" class="logo">
         <span class="brand-text">TechAcademy</span>
     </div>
     <ul class="nav-menu">
@@ -220,18 +220,28 @@
     <div class="modal-content">
         <span class="modal-close">&times;</span>
         <h2>Iniciar Sesión</h2>
+
+        <!-- Mensajes de error y éxito -->
+        <div th:if="${param.error}" class="alert alert-danger">
+            Correo o contraseña incorrectos. Inténtalo de nuevo.
+        </div>
+        <div th:if="${param.logout}" class="alert alert-success">
+            Has cerrado sesión correctamente.
+        </div>
+
+        <!-- Formulario de inicio de sesión -->
         <form th:action="@{/iniciarSesion}" method="post">
             <div class="form-group">
-                <label for="username">Correo Electrónico:</label>
+                <label for="login-username">Correo Electrónico:</label>
                 <div class="input-container">
                     <i class="fa fa-user"></i>
-                    <input type="text" id="username" name="username" placeholder="Ingresa tu correo" required>
+                    <input type="text" id="login-username" name="username" placeholder="Ingresa tu correo" required>
                 </div>
             </div>
             <div class="form-group">
-                <label for="password">Contraseña:</label>
+                <label for="login-password">Contraseña:</label>
                 <div class="input-container">
-                    <input type="password" id="password-inicioSesion" name="password" placeholder="Ingresa tu contraseña" required>
+                    <input type="password" id="login-password" name="password" placeholder="Ingresa tu contraseña" required>
                     <i class="fa fa-eye" id="togglePassword"></i>
                 </div>
             </div>
@@ -240,6 +250,25 @@
     </div>
 </div>
 
+<!-- Script para mostrar/ocultar la contraseña -->
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordInput = document.getElementById('login-password');
+        const icon = this;
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    });
+</script>
+
+
+
 
 <!-- Modal de selección de registro estudiante -->
 <div id="modal-registro" class="modal" aria-labelledby="modal-registro-title" aria-describedby="modal-registro-description">
@@ -247,8 +276,9 @@
         <span class="modal-close" aria-label="Cerrar modal">&times;</span>
         <h2 id="modal-registro-title">Registro de Estudiante</h2>
         <p id="modal-registro-description">Completa el formulario para registrarte como estudiante.</p>
-        <form th:action="@{/Estudiante/estudiante}" th:object="${estudiante}" method="POST">
-            <div>
+        <form th:action="@{/registro}" th:object="${estudiante}" method="POST">
+
+        <div>
                 <label for="nombre">Nombre:</label>
                 <input type="text" th:field="*{nombre}" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
             </div>
@@ -296,34 +326,34 @@
     <div class="modal-content">
         <span class="modal-close">&times;</span>
         <h2>Registro de Profesor</h2>
-        <form th:action="@{/Profesor/profesor}" th:object="${profesor}"  method="POST">
+        <form id="registro-profesor-form">
             <div>
                 <label for="nombre">Nombre:</label>
-                <input type="text" th:field="*{nombre}" id="nombre-profesor" name="nombre" placeholder="Tu nombre completo" required>
+                <input type="text" id="nombre-profesor" name="nombre" placeholder="Tu nombre completo" required>
             </div>
             <div>
                 <label for="email">Correo electrónico:</label>
-                <input type="email" th:field="*{email}" id="email-profesor" name="email" placeholder="ejemplo@correo.com" required>
+                <input type="email" id="email-profesor" name="email" placeholder="ejemplo@correo.com" required>
             </div>
             <div>
                 <label for="password">Contraseña:</label>
-                <input type="password" th:field="*{password}" id="password-profesor" name="password" placeholder="Crea una contraseña" required>
+                <input type="password" id="password-profesor" name="password" placeholder="Crea una contraseña" required>
             </div>
             <div>
                 <label for="telefono">Teléfono:</label>
-                <input type="tel" th:field="*{telefono}" id="telefono-profesor" name="telefono" placeholder="Número de contacto" required>
+                <input type="tel" id="telefono-profesor" name="telefono" placeholder="Número de contacto" required>
             </div>
             <div>
                 <label for="fechaNacimiento">Fecha de nacimiento:</label>
-                <input type="date" th:field="*{fechaNacimiento}" id="fechaNacimiento-profesor" name="fechaNacimiento" required>
+                <input type="date" id="fechaNacimiento-profesor" name="fechaNacimiento" required>
             </div>
             <div>
                 <label for="direccion">Dirección:</label>
-                <input type="text" th:field="*{direccion}" id="direccion-profesor" name="direccion" placeholder="Tu dirección completa" required>
+                <input type="text" id="direccion-profesor" name="direccion" placeholder="Tu dirección completa" required>
             </div>
             <div>
                 <label for="titulo">Título profesional:</label>
-                <select th:field="*{titulo}" id="titulo" required>
+                <select id="titulo" name="titulo" required>
                     <option value="">Seleccione un título</option>
                     <option value="Ingeniero en Software">Ingeniero en Software</option>
                     <option value="Ing. en Sistemas">Ing. en Sistemas</option>
@@ -339,6 +369,42 @@
         </form>
     </div>
 </div>
+
+<script>
+    document.getElementById('registro-profesor-form').addEventListener('submit', function (event) {
+        event.preventDefault(); // Evita el envío tradicional del formulario
+
+        // Recopila los datos del formulario
+        const formData = {
+            nombre: document.getElementById('nombre-profesor').value,
+            email: document.getElementById('email-profesor').value,
+            password: document.getElementById('password-profesor').value,
+            telefono: document.getElementById('telefono-profesor').value,
+            fechaNacimiento: document.getElementById('fechaNacimiento-profesor').value,
+            direccion: document.getElementById('direccion-profesor').value,
+            titulo: document.getElementById('titulo').value,
+            aniosExperiencia: document.getElementById('aniosExperiencia').value
+        };
+
+        // Envía los datos a la API
+        fetch('/api/profesores/registro', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.redirectUrl) {
+                window.location.href = data.redirectUrl; // Redirige al usuario
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+</script>
 
 <!-- footer-->
 <footer class="footer">

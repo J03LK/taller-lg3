@@ -70,11 +70,17 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
 
         const formData = new FormData(this);
-        fetch(this.action, {
-                        method: this.method.toUpperCase(),
-                        body: JSON.stringify(Object.fromEntries(formData)),
-                        headers: { 'Content-Type': 'application/json' }
-                    })
+
+        // Creamos un objeto JSON con los datos del formulario
+        const estudianteData = Object.fromEntries(formData);
+
+        fetch("http://localhost:8080/estudiantes", {  // URL sigue siendo /estudiantes
+            method: "POST",  // Usamos el método POST explícitamente
+            body: JSON.stringify(estudianteData),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
         .then(response => {
             if (response.redirected) {  // Si el servidor redirige, seguimos la redirección
                 window.location.href = response.url;
@@ -92,30 +98,24 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
+
     // Manejo del formulario de registro de profesor
     const registroFormProfesor = document.querySelector('#modal-registro-profesor form');
     if (registroFormProfesor) {
         registroFormProfesor.addEventListener('submit', function (e) {
             e.preventDefault();
-            const formData = new FormData(this);
-            fetch(this.action, {
-                method: this.method.toUpperCase(),
-                body: JSON.stringify(Object.fromEntries(formData)),
-                headers: { 'Content-Type': 'application/json' }
+
+            // Enviar los datos a través de fetch
+            fetch("http://localhost:8080/Profesor/registro", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(profesorData)
             })
             .then(response => response.json())
-            .then(data => {
-                if (data.message === "Registro exitoso!") {
-                    alert('Registro exitoso.');
-                    window.location.href = data.redirectUrl;
-                } else {
-                    alert('Error en el registro: ' + (data.message || 'Intente nuevamente.'));
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error en el registro. Verifique su conexión.');
-            });
-        });
-    }
-});
+            .then(data => console.log(data))
+            .catch(error => console.error("Error:", error));
+        });  // Aquí se cierra correctamente la función addEventListener
+    }  // Aquí se cierra el bloque if
+}); // Este es el cierre correcto para el evento 'DOMContentLoaded'
